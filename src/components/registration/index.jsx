@@ -23,10 +23,23 @@ const Registration = () => {
                 <input type='text' placeholder='Name'></input>
                 <input type='text' placeholder='Last Name'></input>
                 <input type='text' placeholder='Nick'></input>
-                <input type='text' placeholder=''></input>
-                <input type='radio'></input>
-                <input type='radio'></input>
-                <input type='radio'></input>
+                <label htmlFor='date'>Date of Birth</label>
+                <input id='date' type='date'></input>
+                <div className='radio-input'>
+                  <label htmlFor='male'>
+                  Male
+                  <input id='male' name='male' value='male' type='radio' />
+                  </label>
+                </div>
+                <div className='radio-input'>
+                  <label htmlFor='female'>Female</label>
+                  <input id='female' name='female' value='female' type='radio'></input>
+                </div>
+                <div className='radio-input'>
+                  <label htmlFor='Other'>Other</label>
+                  <input id='other' name='other' value='other' type='radio'></input>
+                </div>
+                <input type='image' alt='input image button'></input>
                 <button>Sign up</button>
               </form>
             </div>

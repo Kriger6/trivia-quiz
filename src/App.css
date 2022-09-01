@@ -25,9 +25,6 @@
     height: calc(822px / 2);
 }
 
-.section-container>div {
-}
-
 .left-side-container {
     width: 50vw;
 }
@@ -52,7 +49,7 @@
 
 
 .reg-card-header {
-    background-color: #B5EE7B;
+    background-color: #0EA8A1;
     height: calc(122px / 1.2);
     border-top-left-radius: 9px;
     border-top-right-radius: 9px;
@@ -69,7 +66,7 @@
 .reg-card-header p {
     margin-top: 0px;
     margin-left: 25px;
-    color: #B49D9E;
+    color: #cabcbc;
 }
 
 .reg-card input {
@@ -81,10 +78,54 @@
 
 .reg-card form {
     display: flex;
-    margin-top: 20px;
     flex-wrap: wrap;
-    justify-content: center;
-    width: 350px;
+    justify-content: space-between;
+    width: 100%;
+    padding: 30px;
+    box-sizing: border-box;
 }
 
+form input {
+    margin-bottom: 25px;
+}
+
+form :first-child {
+    width: 130px;
+}
+
+form :nth-child(2) {
+    width: 130px;
+}
+
+form :nth-child(3) {
+    width: 100%
+}
+
+form :nth-child(4) {
+    margin-bottom: 5px;
+    margin-top: -10px;
+}
+
+form :nth-child(5) {
+    width: 100%
+}
+
+form button {
+    background-color: #0EA8A1;
+    border: 1px solid #707070;
+    border-radius: 10px;
+    color: #B49D9E;
+}
+
+input[type='radio'] {
+    vertical-align: baseline
+}
+
+label {
+    color: #B49D9E;
+}
+
+.radio-input {
+    width: 30%;
+}
 
