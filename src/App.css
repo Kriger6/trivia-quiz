@@ -2,8 +2,9 @@
     color: white;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-style: italic;
-    font-size: 6em;
+    font-size: 8em;
     font-weight: lighter;
+    margin-left: 10%;
 }
 
 .photo-container {
@@ -12,9 +13,10 @@
 }
 
 .img {
-    height: calc(503px / 1.5);
-    width: calc(503px / 1.5);
+    height: calc(503px / 1.7);
+    width: calc(503px / 1.7);
     transform: rotate(15deg);
+    margin-left: 100%;
 }
 
 .section-container {
@@ -27,6 +29,8 @@
 
 .left-side-container {
     width: 50vw;
+    display: flex;
+    flex-direction: column;
 }
 
 .right-side-container {
@@ -128,4 +132,33 @@ label {
 .radio-input {
     width: 30%;
 }
+
+input[type='file'] {
+    width: 100%;
+    color: #757589;
+}
+
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 40px;
+}
+
+.button-container :first-child {
+    color: white;
+    font-size: larger;
+    background-color: #0EA8A1;
+        -webkit-transition: background-color 1s;
+        -moz-transition: background-color 1s;
+        -ms-transition: background-color 1s;
+        -o-transition: background-color 1s;
+        transition: background-color 1s;
+}
+
+.button-container :first-child:hover {
+    background-color: #0ea8a0ac
+}
+
+
 

@@ -1,6 +1,36 @@
 import React from 'react'
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 const Registration = () => {
+
+  const [localData, setLocalData] = useState({
+    userName: "",
+    lastName: "",
+    nick: "",
+    dateOfBirth: "",
+    gender: "",
+    image: ""
+  })
+
+  const handleChange = (e) => {
+    setLocalData({
+      ...localData, [e.target.name]: e.target.value
+    })
+  }
+
+  let navigate = useNavigate()
+
+  const signUp = (e) => {
+    if (Object.values(localData).includes("")) {
+      return
+    } else {
+      localStorage.setItem("profileData", localData)
+      console.log(localStorage.getItem("profileData"));
+    }
+
+  }
+
   return (
     <div>
       <div className='section-container'>
@@ -20,27 +50,29 @@ const Registration = () => {
             </div>
             <div className='reg-card'>
               <form>
-                <input type='text' placeholder='Name'></input>
-                <input type='text' placeholder='Last Name'></input>
-                <input type='text' placeholder='Nick'></input>
+                <input type='text' placeholder='Name' name='userName' onChange={handleChange}></input>
+                <input type='text' placeholder='Last Name' name='lastName' onChange={handleChange}></input>
+                <input type='text' placeholder='Nick' name='nick' onChange={handleChange}></input>
                 <label htmlFor='date'>Date of Birth</label>
-                <input id='date' type='date'></input>
+                <input id='date' type='date' name='dateOfBirth' onChange={handleChange}></input>
                 <div className='radio-input'>
                   <label htmlFor='male'>
                   Male
-                  <input id='male' name='male' value='male' type='radio' />
+                    <input id='male' name='gender' value='male' type='radio' onChange={handleChange} />
                   </label>
                 </div>
                 <div className='radio-input'>
                   <label htmlFor='female'>Female</label>
-                  <input id='female' name='female' value='female' type='radio'></input>
+                  <input id='female' name='gender' value='female' type='radio' onChange={handleChange}></input>
                 </div>
                 <div className='radio-input'>
                   <label htmlFor='Other'>Other</label>
-                  <input id='other' name='other' value='other' type='radio'></input>
+                  <input id='other' name='gender' value='other' type='radio' onChange={handleChange}></input>
                 </div>
-                <input type='image' alt='input image button'></input>
-                <button>Sign up</button>
+                <input type='file' accept='image/*' alt='input image button' name='image' onChange={handleChange}></input>
+                <div className='button-container'>
+                <button type='button' onClick={signUp}>Sign up</button>
+                </div>
               </form>
             </div>
           </div>
