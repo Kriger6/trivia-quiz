@@ -1,8 +1,15 @@
 import React from 'react'
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 const Registration = () => {
+
+  // useEffect(() => {
+  //   if () {
+      
+  //   }
+  // }, [])
 
   const [localData, setLocalData] = useState({
     userName: "",
@@ -25,8 +32,10 @@ const Registration = () => {
     if (Object.values(localData).includes("")) {
       return
     } else {
-      localStorage.setItem("profileData", localData)
-      console.log(localStorage.getItem("profileData"));
+      localStorage.setItem("profileData", JSON.stringify(localData))
+      navigate("/home")
+      let value = localStorage.getItem("profileData");
+      console.log(JSON.parse(value));
     }
 
   }
