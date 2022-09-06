@@ -5,14 +5,15 @@
     font-size: 8em;
     font-weight: lighter;
     margin-left: 10%;
+    -webkit-text-stroke: 1px #49D88B;
 }
 
-.photo-container {
+.logo-photo-container {
     width: 300px;
     height: 300px;
 }
 
-.img {
+.left-side-container img {
     height: calc(503px / 1.7);
     width: calc(503px / 1.7);
     transform: rotate(15deg);
@@ -133,9 +134,8 @@ label {
     width: 30%;
 }
 
-input[type='file'] {
+input[type='url'] {
     width: 100%;
-    color: #757589;
 }
 
 .button-container {

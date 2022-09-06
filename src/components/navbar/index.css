@@ -1,0 +1,51 @@
+.navbar-container {
+    width: 100%;
+    background-color: #FFB63D;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar {
+    background-color: #FFB63D;
+    height: 60px;
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+
+.navbar-user-section {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-user-section :first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-user-section :nth-child(2) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.nick-container :first-child {
+    margin: 0;
+}
+
+.navbar-user-section img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.navbar-buttons {
+    display: flex;
+    width: 150px;
+    justify-content: space-between;
+    align-items: center;
+}

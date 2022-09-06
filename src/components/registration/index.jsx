@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -12,13 +12,31 @@ const Registration = () => {
   // }, [])
 
   const [localData, setLocalData] = useState({
-    userName: "",
+    firstName: "",
     lastName: "",
     nick: "",
     dateOfBirth: "",
     gender: "",
     image: ""
   })
+
+  // const imageUpload = (e) => {
+  //   const file = e.target.files[0]
+  //   handleChange(e)
+  //   getBase64(file).then(base64 => {
+  //     localStorage["fileBase64"] = base64
+  //     console.debug("file stored", base64)
+  //   })
+  // }
+
+  // const getBase64 = (file, e) => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader()
+  //     reader.onload = () => resolve(reader.result)
+  //     reader.onerror = error => reject(error)
+  //     reader.readAsDataURL(file)
+  //   })
+  // } 
 
   const handleChange = (e) => {
     setLocalData({
@@ -45,7 +63,7 @@ const Registration = () => {
       <div className='section-container'>
         <div className='left-side-container'>
           <h1>trivia</h1>
-          <div className='photo-container'>
+          <div className='logo-photo-container'>
             <img src={require('../../assets/quiz.png')} alt='quiz logo' className='img' />
           </div>
         </div>
@@ -59,7 +77,7 @@ const Registration = () => {
             </div>
             <div className='reg-card'>
               <form>
-                <input type='text' placeholder='Name' name='userName' onChange={handleChange}></input>
+                <input type='text' placeholder='Name' name='firstName' onChange={handleChange}></input>
                 <input type='text' placeholder='Last Name' name='lastName' onChange={handleChange}></input>
                 <input type='text' placeholder='Nick' name='nick' onChange={handleChange}></input>
                 <label htmlFor='date'>Date of Birth</label>
@@ -78,7 +96,7 @@ const Registration = () => {
                   <label htmlFor='Other'>Other</label>
                   <input id='other' name='gender' value='other' type='radio' onChange={handleChange}></input>
                 </div>
-                <input type='file' accept='image/*' alt='input image button' name='image' onChange={handleChange}></input>
+                <input type='url' alt='input image button' name='image' onChange={handleChange}></input>
                 <div className='button-container'>
                 <button type='button' onClick={signUp}>Sign up</button>
                 </div>

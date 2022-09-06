@@ -1,0 +1,15 @@
+.home-body {
+    background-color: #3D85FF;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.body-container {
+    width: 1200px;
+}
+
+.header-text :first-child {
+    margin: 0;
+    color: #FFB63D;
+}
