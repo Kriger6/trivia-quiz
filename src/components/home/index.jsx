@@ -12,7 +12,21 @@ const Home = () => {
             <h1>Select topic and click <span style={{color: "white"}}>play</span> button</h1>
           </div>
           <div className='topic-card'>
-
+            <div className='topic-button-container'>
+              <div className='topic-button'>
+                Entertainment: Video Games
+              </div>
+              <div className='topic-button'>
+                Science: Computers
+              </div>
+              <div className='topic-button'>
+                General Knowledge
+              </div>
+              <div className='topic-button'>
+                History
+              </div>
+            </div>
+            <button className='play-button'>Play</button>
           </div>
         </div>
       </div>

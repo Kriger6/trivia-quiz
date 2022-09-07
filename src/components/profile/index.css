@@ -1,0 +1,8 @@
+.profile-body {
+    background-color: #3D85FF;
+    height: calc(100vh - 60px);
+}
+
+.main-info-section {
+    width: 95%;
+}
