@@ -160,5 +160,10 @@ input[type='url'] {
     background-color: #0ea8a0ac
 }
 
+.button-container :first-child:active {
+    background-color: white;
+    color: #0EA8A1;
+}
+
 
 

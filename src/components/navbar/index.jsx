@@ -1,9 +1,10 @@
 import React from 'react'
+import { useNavigate } from 'react-router';
 import './index.css'
 
 const NavBar = () => {
 
-
+    const navigate = useNavigate()
     const localStorageData = JSON.parse(localStorage.getItem("profileData"));
 
     return (
@@ -21,7 +22,10 @@ const NavBar = () => {
                     <div className='home-button-container'>
                         Home
                     </div>
-                    <div className='log-out-button-container'>
+                    <div className='log-out-button-container' onClick={() => {
+                            localStorage.clear()
+                            navigate('/registration')
+                        }}>
                         Log out
                     </div>
                 </div>

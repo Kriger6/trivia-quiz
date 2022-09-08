@@ -20,24 +20,6 @@ const Registration = () => {
     image: ""
   })
 
-  // const imageUpload = (e) => {
-  //   const file = e.target.files[0]
-  //   handleChange(e)
-  //   getBase64(file).then(base64 => {
-  //     localStorage["fileBase64"] = base64
-  //     console.debug("file stored", base64)
-  //   })
-  // }
-
-  // const getBase64 = (file, e) => {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader()
-  //     reader.onload = () => resolve(reader.result)
-  //     reader.onerror = error => reject(error)
-  //     reader.readAsDataURL(file)
-  //   })
-  // } 
-
   const handleChange = (e) => {
     setLocalData({
       ...localData, [e.target.name]: e.target.value
@@ -52,8 +34,6 @@ const Registration = () => {
     } else {
       localStorage.setItem("profileData", JSON.stringify(localData))
       navigate("/home")
-      let value = localStorage.getItem("profileData");
-      console.log(JSON.parse(value));
     }
 
   }
