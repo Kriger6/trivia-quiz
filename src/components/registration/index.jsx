@@ -1,15 +1,10 @@
 import React from 'react'
-// import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 const Registration = () => {
-
-  // useEffect(() => {
-  //   if () {
-      
-  //   }
-  // }, [])
+  
+  let navigate = useNavigate()
 
   const [localData, setLocalData] = useState({
     firstName: "",
@@ -26,7 +21,6 @@ const Registration = () => {
     })
   }
 
-  let navigate = useNavigate()
 
   const signUp = (e) => {
     if (Object.values(localData).includes("")) {
@@ -58,7 +52,7 @@ const Registration = () => {
             <div className='reg-card'>
               <form>
                 <input type='text' placeholder='Name' name='firstName' onChange={handleChange}></input>
-                <input type='text' placeholder='Last Name' name='lastName' onChange={handleChange}></input>
+                <input required type='text' placeholder='Last Name' name='lastName' onChange={handleChange}></input>
                 <input type='text' placeholder='Nick' name='nick' onChange={handleChange}></input>
                 <label htmlFor='date'>Date of Birth</label>
                 <input id='date' type='date' name='dateOfBirth' onChange={handleChange}></input>

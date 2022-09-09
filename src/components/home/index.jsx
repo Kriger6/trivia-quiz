@@ -3,6 +3,9 @@ import NavBar from '../navbar'
 import './index.css'
 
 const Home = () => {
+
+  const localStorageData = localStorage.getItem("profileData")
+
   return (
     <div>
       <NavBar />

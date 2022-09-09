@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router';
 import './index.css'
 
 const NavBar = () => {
-
+    
     const navigate = useNavigate()
+
     const localStorageData = JSON.parse(localStorage.getItem("profileData"));
 
     return (
@@ -12,10 +13,10 @@ const NavBar = () => {
             <nav className='navbar'>
                 <div className='navbar-user-section'>
                     <div>
-                        <img src={localStorageData.image} alt="user" />
+                        {localStorageData && <img src={localStorageData.image} alt="user" />}
                     </div>
                     <div className='nick-container'>
-                        <h2>{localStorageData.nick}</h2>
+                        {localStorageData && <h2>{localStorageData.nick}</h2>}
                     </div>
                 </div>
                 <div className='navbar-buttons'>
@@ -23,8 +24,8 @@ const NavBar = () => {
                         Home
                     </div>
                     <div className='log-out-button-container' onClick={() => {
-                            localStorage.clear()
-                            navigate('/registration')
+                        localStorage.clear()
+                        navigate('/registration')
                         }}>
                         Log out
                     </div>
