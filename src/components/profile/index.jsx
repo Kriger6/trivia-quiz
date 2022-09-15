@@ -1,15 +1,20 @@
 import React from 'react'
+import { useEffect } from 'react'
 import NavBar from '../navbar'
 import './index.css'
 
 
-const Profile = () => {
+const Profile = ({ setState, state }) => {
+
+  useEffect(() => {
+    setState(true)
+  }, [state, setState])
 
   const localStorageData = JSON.parse(localStorage.getItem("profileData"));
 
   return (
     <div>
-      <NavBar />
+      <NavBar state={state} setState={setState} />
       <div className='profile-body'>
         <section className='main-info-section'>
           <div className='circle-photo-container'>

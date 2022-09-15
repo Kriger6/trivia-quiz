@@ -2,8 +2,8 @@ import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-const Registration = () => {
-  
+const Registration = ({ setState }) => {
+
   let navigate = useNavigate()
 
   const [localData, setLocalData] = useState({
@@ -27,6 +27,7 @@ const Registration = () => {
       return
     } else {
       localStorage.setItem("profileData", JSON.stringify(localData))
+      setState(true)
       navigate("/home")
     }
 
@@ -58,7 +59,7 @@ const Registration = () => {
                 <input id='date' type='date' name='dateOfBirth' onChange={handleChange}></input>
                 <div className='radio-input'>
                   <label htmlFor='male'>
-                  Male
+                    Male
                     <input id='male' name='gender' value='male' type='radio' onChange={handleChange} />
                   </label>
                 </div>
@@ -72,7 +73,7 @@ const Registration = () => {
                 </div>
                 <input type='url' alt='input image button' name='image' onChange={handleChange}></input>
                 <div className='button-container'>
-                <button type='button' onClick={signUp}>Sign up</button>
+                  <button type='button' onClick={signUp}>Sign up</button>
                 </div>
               </form>
             </div>

@@ -1,18 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react'
 import NavBar from '../navbar'
 import './index.css'
 
-const Home = () => {
+const Home = ({ setState, state }) => {
 
-  const localStorageData = localStorage.getItem("profileData")
+  useEffect(() => {
+    setState(true)
+  }, [state, setState])
+
+  const [buttonVisibility, setButtonVisibility] = useState(false)
+
 
   return (
     <div>
-      <NavBar />
+      <NavBar state={state} setState={setState} />
       <div className='home-body'>
         <div className='body-container'>
           <div className='header-text'>
-            <h1>Select topic and click <span style={{color: "white"}}>play</span> button</h1>
+            <h1>Select topic and click <span style={{ color: "white" }}>play</span> button</h1>
           </div>
           <div className='topic-card'>
             <div className='topic-button-container'>
@@ -29,7 +35,7 @@ const Home = () => {
                 History
               </div>
             </div>
-            <button className='play-button'>Play</button>
+            <button className='play-button' onClick={() => setButtonVisibility(false)}>Play</button>
           </div>
         </div>
       </div>
