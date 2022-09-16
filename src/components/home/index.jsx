@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import NavBar from '../navbar'
 import './index.css'
+import axios from 'axios'
+import { useRef } from 'react'
 
 const Home = ({ setState, state }) => {
 
@@ -9,7 +11,13 @@ const Home = ({ setState, state }) => {
     setState(true)
   }, [state, setState])
 
-  const [buttonVisibility, setButtonVisibility] = useState(false)
+  const [buttonVisibility, setButtonVisibility] = useState(true)
+  const [moveButtonGroup, setMoveButtonGroup] = useState(false)
+  const [questionContainer, setQuestionContainer] = useState(false)
+  const [selectedTopic, setSelectedTopic] = useState()
+
+  const topicList = useRef()
+  
 
 
   return (
@@ -21,8 +29,9 @@ const Home = ({ setState, state }) => {
             <h1>Select topic and click <span style={{ color: "white" }}>play</span> button</h1>
           </div>
           <div className='topic-card'>
-            <div className='topic-button-container'>
-              <div className='topic-button'>
+            {questionContainer && <div className={questionContainer ? 'question-container' : ''}></div>}
+            <div ref={topicList} className={moveButtonGroup === true ? 'topic-button-container topic-button-container-animation' : 'topic-button-container'}>
+              <div className='topic-button' onClick={(e) => console.log(topicList.current.children)}>
                 Entertainment: Video Games
               </div>
               <div className='topic-button'>
@@ -35,7 +44,16 @@ const Home = ({ setState, state }) => {
                 History
               </div>
             </div>
-            <button className='play-button' onClick={() => setButtonVisibility(false)}>Play</button>
+            <button className={buttonVisibility === true ? 'play-button' : 'play-button play-button-animation'} onClick={() => {
+              if (!selectedTopic) {
+                return
+              }
+              setButtonVisibility(false)
+              setTimeout(() => {
+                setMoveButtonGroup(true)
+                setQuestionContainer(true)
+              }, 1500)
+            }}>Play</button>
           </div>
         </div>
       </div>
