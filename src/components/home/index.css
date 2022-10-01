@@ -144,3 +144,7 @@
         margin-top: 50px;
     }
 }
+
+.something {
+    border-style: double;
+}

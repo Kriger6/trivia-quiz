@@ -18,7 +18,10 @@ const Home = ({ setState, state }) => {
 
   const topicList = useRef()
   
-
+  const toggleButton = e => {
+    setSelectedTopic(prevState => e)
+    // console.log(e.target.innerHTML);
+  }
 
   return (
     <div>
@@ -31,10 +34,10 @@ const Home = ({ setState, state }) => {
           <div className='topic-card'>
             {questionContainer && <div className={questionContainer ? 'question-container' : ''}></div>}
             <div ref={topicList} className={moveButtonGroup === true ? 'topic-button-container topic-button-container-animation' : 'topic-button-container'}>
-              <div className='topic-button' onClick={(e) => console.log(topicList.current.children)}>
+              <div className={selectedTopic === 1 ? 'topic-button something' : 'topic-button'} onClick={() => toggleButton(1)}>
                 Entertainment: Video Games
               </div>
-              <div className='topic-button'>
+              <div className={selectedTopic === 2 ? 'topic-button something' : 'topic-button'} onClick={() => toggleButton(2)}>
                 Science: Computers
               </div>
               <div className='topic-button'>
