@@ -115,11 +115,12 @@
 
 .question-container {
     width: 290px;
-    height: 46px;
+    height: 65px;
     background-color: #FFB63D;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+    text-align: center;
     border-radius: 10px;
     color: white;
     animation-name: questionContainerAnimation;
