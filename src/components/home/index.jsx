@@ -23,7 +23,8 @@ const Home = ({ setState, state }) => {
   const [fetchResults, setFetchResults] = useState()
   const [level, setLevel] = useState(1)
   const [shuffleAnswer, setShuffleAnswer] = useState()
-  const [correctAnswer, setCorrectAnswer] = useState()
+  const [renderAnswer, setRenderAnswer] = useState(false)
+  const [points, setPoints] = useState(0)
 
   const fetchQuestions = useCallback(() => {
     axios.get(`https://opentdb.com/api.php?amount=20&category=${selectedTopic}&difficulty=medium&type=multiple`)
@@ -37,16 +38,34 @@ const Home = ({ setState, state }) => {
 
 
   useEffect(() => {
-    if (buttonVisibility === false) {
+    if (buttonVisibility === false && !fetchResults) {
       fetchQuestions()
     }
-  }, [buttonVisibility, fetchQuestions])
+  }, [buttonVisibility, fetchResults, fetchQuestions])
+
+  useEffect(() => {
+    if(fetchResults === undefined) {
+      return
+    }
+
+    let timer1 = setTimeout(() => {
+      shuffleArray(fetchResults, level)
+      deleteTopics()
+      setTopicsVanish(false)
+      setRenderAnswer(true)
+    }, 1200)
+
+    return () => clearTimeout(timer1)
+  }, [fetchResults, buttonVisibility, level])
 
 
   const topicList = useRef()
 
   const toggleButton = e => {
     setSelectedTopic(e)
+    if (fetchResults) {
+      answerSubmit()
+    }
   }
 
   const clearSelectedTopic = () => {
@@ -55,13 +74,13 @@ const Home = ({ setState, state }) => {
         setSelectedTopic(15)
         break;
       case 2:
-        setSelectedTopic(prevState => 18)
+        setSelectedTopic(18)
         break;
       case 3:
-        setSelectedTopic(prevState => 9)
+        setSelectedTopic(9)
         break;
       case 4:
-        setSelectedTopic(prevState => 23)
+        setSelectedTopic(23)
         break;
       default:
         break;
@@ -72,9 +91,9 @@ const Home = ({ setState, state }) => {
     setTopics(null)
   }
 
-  const shuffleArray = (phase) => {
-    let combinedArray = fetchResults[phase].incorrect_answers
-    combinedArray.push(fetchResults[phase].correct_answer)
+  const shuffleArray = (array, phase) => {
+    let combinedArray = [...array[phase - 1].incorrect_answers]
+    combinedArray.push(array[phase - 1].correct_answer)
     
     for (let i = combinedArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -82,6 +101,14 @@ const Home = ({ setState, state }) => {
     }
 
     setShuffleAnswer(combinedArray)
+  }
+
+  const answerSubmit = () => {
+    console.log(shuffleAnswer[selectedTopic - 1], fetchResults[level - 1].correct_answer);
+    if (shuffleAnswer[selectedTopic - 1] === fetchResults[level - 1].correct_answer) {
+      setPoints(prevState => prevState + 1)
+    } else {console.log("looser", fetchResults[level - 1].correct_answer);}
+      setLevel(prevState => prevState + 1)
   }
 
 
@@ -99,23 +126,39 @@ const Home = ({ setState, state }) => {
             </div>}
             <div ref={topicList} className={moveButtonGroup === true ? 'topic-button-container topic-button-container-animation' : 'topic-button-container'}>
               <div className={
-                `topic-button ${selectedTopic === 1 ? 'selected' : ''} ${topicsVanish === true ? 'topics-fade-away' : ''}`} onClick={() => toggleButton(1)}>
-                {topics && topics[0]}
+                `topic-button 
+                ${selectedTopic === 1 ? 'selected' : ''} 
+                ${topicsVanish === true ? 'topics-fade-away' : ''}
+                ${renderAnswer === true ? 'render-answer' : ''}
+                `} onClick={() => toggleButton(1)}>
+                {topics ? topics[0] : `${decode(shuffleAnswer[0])}`}
               </div>
               <div className={
-                `topic-button ${selectedTopic === 2 ? 'selected' : ''} ${topicsVanish === true ? 'topics-fade-away' : ''}`
+                `topic-button 
+                ${selectedTopic === 2 ? 'selected' : ''} 
+                ${topicsVanish === true ? 'topics-fade-away' : ''}
+                ${renderAnswer === true ? 'render-answer' : ''}
+                `
               } onClick={() => toggleButton(2)}>
-                {topics && topics[1]}
+                {topics ? topics[1] : `${decode(shuffleAnswer[1])}`}
               </div>
               <div className={
-                `topic-button ${selectedTopic === 3 ? 'selected' : ''} ${topicsVanish === true ? 'topics-fade-away' : ''}`
+                `topic-button 
+                ${selectedTopic === 3 ? 'selected' : ''} 
+                ${topicsVanish === true ? 'topics-fade-away' : ''}
+                ${renderAnswer === true ? 'render-answer' : ''}
+                `
               } onClick={() => toggleButton(3)}>
-                {topics && topics[2]}
+                {topics ? topics[2] : `${decode(shuffleAnswer[2])}`}
               </div>
               <div className={
-                `topic-button ${selectedTopic === 4 ? 'selected' : ''} ${topicsVanish === true ? 'topics-fade-away' : ''}`
+                `topic-button 
+                ${selectedTopic === 4 ? 'selected' : ''} 
+                ${topicsVanish === true ? 'topics-fade-away' : ''}
+                ${renderAnswer === true ? 'render-answer' : ''}
+                `
               } onClick={() => toggleButton(4)}>
-                {topics && topics[3]}
+                {topics ? topics[3] : `${decode(shuffleAnswer[3])}`}
               </div>
             </div>
             <button className={buttonVisibility === true ? 'play-button' : 'play-button play-button-animation'} onClick={() => {
@@ -126,12 +169,11 @@ const Home = ({ setState, state }) => {
               clearSelectedTopic()
               setTopicsVanish(true)
               fetchQuestions()
-              setTimeout(() => {
-                shuffleArray(level)
-                deleteTopics()
+              const timer1 = setTimeout(() => {
                 setMoveButtonGroup(true)
                 setQuestionContainer(true)
               }, 1500)
+              return () => clearTimeout(timer1)
             }}>Play</button>
           </div>
         </div>
