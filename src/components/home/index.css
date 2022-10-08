@@ -91,7 +91,7 @@
     }
 
     100% {
-        margin-top: 75px;
+        margin-top: 70px;
     }
 }
 
@@ -116,7 +116,7 @@
 
 .question-container {
     width: 300px;
-    height: 65px;
+    height: 85px;
     background-color: #FFB63D;
     display: flex;
     justify-content: center;

@@ -14,17 +14,34 @@ const Home = ({ setState, state }) => {
   }, [state, setState])
 
 
+  const topicList = useRef()
+
   const [buttonVisibility, setButtonVisibility] = useState(true)
   const [moveButtonGroup, setMoveButtonGroup] = useState(false)
   const [questionContainer, setQuestionContainer] = useState(false)
   const [topics, setTopics] = useState(['Entertainment: Video Games', 'Science: Computers', 'General Knowledge', 'History'])
   const [selectedTopic, setSelectedTopic] = useState()
+  const [selectedAnswer, setSelectedAnswer] = useState()
   const [topicsVanish, setTopicsVanish] = useState(false)
   const [fetchResults, setFetchResults] = useState()
   const [level, setLevel] = useState(1)
   const [shuffleAnswer, setShuffleAnswer] = useState()
   const [renderAnswer, setRenderAnswer] = useState(false)
   const [points, setPoints] = useState(0)
+  const [startTimer, setStartTimer] = useState(false)
+  const [timer, setTimer] = useState(0)
+
+  useEffect(() => {
+    if (startTimer === true) {
+      const timerID = setInterval(() => setTimer(prevState => prevState + 1), 1000)
+
+      return () => {
+        clearInterval(timerID)
+        console.log(timer);
+      }
+    }
+
+  }, [startTimer, timer])
 
   const fetchQuestions = useCallback(() => {
     axios.get(`https://opentdb.com/api.php?amount=20&category=${selectedTopic}&difficulty=medium&type=multiple`)
@@ -44,7 +61,7 @@ const Home = ({ setState, state }) => {
   }, [buttonVisibility, fetchResults, fetchQuestions])
 
   useEffect(() => {
-    if(fetchResults === undefined) {
+    if (fetchResults === undefined) {
       return
     }
 
@@ -53,19 +70,16 @@ const Home = ({ setState, state }) => {
       deleteTopics()
       setTopicsVanish(false)
       setRenderAnswer(true)
-    }, 1200)
+    }, 300)
 
     return () => clearTimeout(timer1)
   }, [fetchResults, buttonVisibility, level])
 
 
-  const topicList = useRef()
 
   const toggleButton = e => {
     setSelectedTopic(e)
-    if (fetchResults) {
-      answerSubmit()
-    }
+    setSelectedAnswer(e)
   }
 
   const clearSelectedTopic = () => {
@@ -94,7 +108,7 @@ const Home = ({ setState, state }) => {
   const shuffleArray = (array, phase) => {
     let combinedArray = [...array[phase - 1].incorrect_answers]
     combinedArray.push(array[phase - 1].correct_answer)
-    
+
     for (let i = combinedArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [combinedArray[i], combinedArray[j]] = [combinedArray[j], combinedArray[i]];
@@ -103,13 +117,37 @@ const Home = ({ setState, state }) => {
     setShuffleAnswer(combinedArray)
   }
 
-  const answerSubmit = () => {
-    console.log(shuffleAnswer[selectedTopic - 1], fetchResults[level - 1].correct_answer);
-    if (shuffleAnswer[selectedTopic - 1] === fetchResults[level - 1].correct_answer) {
+  const answerSubmit = useCallback(() => {
+    if (!shuffleAnswer) {
+      return
+    }
+    if (shuffleAnswer[selectedAnswer - 1] === fetchResults[level - 1].correct_answer) {
       setPoints(prevState => prevState + 1)
-    } else {console.log("looser", fetchResults[level - 1].correct_answer);}
-      setLevel(prevState => prevState + 1)
-  }
+    } else {
+      console.log("looser", fetchResults[level - 1].correct_answer);
+    }
+    setLevel(prevState => prevState + 1)
+  }, [fetchResults, level, selectedAnswer, shuffleAnswer])
+
+  useEffect(() => {
+    if (!fetchResults || selectedTopic === null) {
+      return
+    } else {
+      answerSubmit()
+      setSelectedTopic(null)
+    }
+  }, [selectedTopic, answerSubmit, fetchResults])
+
+  useEffect(() => {
+    if (level > 10) {
+      setStartTimer(false)
+      if (points >= 5) {
+        console.log("quiz successful");
+      } else {
+        console.log("quiz failed");
+      }
+    }
+  }, [points, level])
 
 
   return (
@@ -165,6 +203,7 @@ const Home = ({ setState, state }) => {
               if (!selectedTopic) {
                 return
               }
+              setStartTimer(true)
               setButtonVisibility(false)
               clearSelectedTopic()
               setTopicsVanish(true)
