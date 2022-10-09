@@ -30,6 +30,7 @@ const Home = ({ setState, state }) => {
   const [points, setPoints] = useState(0)
   const [startTimer, setStartTimer] = useState(false)
   const [timer, setTimer] = useState(0)
+  const [buttonClickable, setButtonClickable] = useState(true)
 
   useEffect(() => {
     if (startTimer === true) {
@@ -37,7 +38,6 @@ const Home = ({ setState, state }) => {
 
       return () => {
         clearInterval(timerID)
-        console.log(timer);
       }
     }
 
@@ -46,7 +46,6 @@ const Home = ({ setState, state }) => {
   const fetchQuestions = useCallback(() => {
     axios.get(`https://opentdb.com/api.php?amount=20&category=${selectedTopic}&difficulty=medium&type=multiple`)
       .then((response) => {
-        console.log(response)
         if (response.data.results.length !== 0) {
           setFetchResults(response.data.results)
         }
@@ -60,24 +59,13 @@ const Home = ({ setState, state }) => {
     }
   }, [buttonVisibility, fetchResults, fetchQuestions])
 
-  useEffect(() => {
-    if (fetchResults === undefined) {
-      return
-    }
-
-    let timer1 = setTimeout(() => {
-      shuffleArray(fetchResults, level)
-      deleteTopics()
-      setTopicsVanish(false)
-      setRenderAnswer(true)
-    }, 300)
-
-    return () => clearTimeout(timer1)
-  }, [fetchResults, buttonVisibility, level])
-
-
+  
+  
 
   const toggleButton = e => {
+    if (buttonClickable === false) {
+      return
+    }
     setSelectedTopic(e)
     setSelectedAnswer(e)
   }
@@ -87,13 +75,13 @@ const Home = ({ setState, state }) => {
       case 1:
         setSelectedTopic(15)
         break;
-      case 2:
+        case 2:
         setSelectedTopic(18)
         break;
       case 3:
         setSelectedTopic(9)
         break;
-      case 4:
+        case 4:
         setSelectedTopic(23)
         break;
       default:
@@ -104,18 +92,36 @@ const Home = ({ setState, state }) => {
   const deleteTopics = () => {
     setTopics(null)
   }
-
-  const shuffleArray = (array, phase) => {
+  
+  const shuffleArray = useCallback((array, phase) => {
+    if (buttonClickable === false) {
+      return
+    }
     let combinedArray = [...array[phase - 1].incorrect_answers]
     combinedArray.push(array[phase - 1].correct_answer)
-
+    
     for (let i = combinedArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [combinedArray[i], combinedArray[j]] = [combinedArray[j], combinedArray[i]];
     }
-
+    
     setShuffleAnswer(combinedArray)
-  }
+  }, [buttonClickable])
+  
+  useEffect(() => {
+    if (fetchResults === undefined) {
+      return
+    }
+
+    let timer1 = setTimeout(() => {
+      shuffleArray(fetchResults, level)
+      deleteTopics()
+      setTopicsVanish(false)
+      setRenderAnswer(true)
+    }, 100)
+
+    return () => clearTimeout(timer1)
+  }, [fetchResults, buttonVisibility, level, shuffleArray])
 
   const answerSubmit = useCallback(() => {
     if (!shuffleAnswer) {
@@ -124,7 +130,6 @@ const Home = ({ setState, state }) => {
     if (shuffleAnswer[selectedAnswer - 1] === fetchResults[level - 1].correct_answer) {
       setPoints(prevState => prevState + 1)
     } else {
-      console.log("looser", fetchResults[level - 1].correct_answer);
     }
     setLevel(prevState => prevState + 1)
   }, [fetchResults, level, selectedAnswer, shuffleAnswer])
@@ -140,11 +145,9 @@ const Home = ({ setState, state }) => {
 
   useEffect(() => {
     if (level > 10) {
+      setButtonClickable(false)
       setStartTimer(false)
       if (points >= 5) {
-        console.log("quiz successful");
-      } else {
-        console.log("quiz failed");
       }
     }
   }, [points, level])
@@ -169,7 +172,7 @@ const Home = ({ setState, state }) => {
                 ${topicsVanish === true ? 'topics-fade-away' : ''}
                 ${renderAnswer === true ? 'render-answer' : ''}
                 `} onClick={() => toggleButton(1)}>
-                {topics ? topics[0] : `${decode(shuffleAnswer[0])}`}
+                {topics ? topics[0] : decode(shuffleAnswer[0])}
               </div>
               <div className={
                 `topic-button 
@@ -178,7 +181,7 @@ const Home = ({ setState, state }) => {
                 ${renderAnswer === true ? 'render-answer' : ''}
                 `
               } onClick={() => toggleButton(2)}>
-                {topics ? topics[1] : `${decode(shuffleAnswer[1])}`}
+                {topics ? topics[1] : decode(shuffleAnswer[1])}
               </div>
               <div className={
                 `topic-button 
@@ -187,7 +190,7 @@ const Home = ({ setState, state }) => {
                 ${renderAnswer === true ? 'render-answer' : ''}
                 `
               } onClick={() => toggleButton(3)}>
-                {topics ? topics[2] : `${decode(shuffleAnswer[2])}`}
+                {topics ? topics[2] : decode(shuffleAnswer[2])}
               </div>
               <div className={
                 `topic-button 
@@ -196,7 +199,7 @@ const Home = ({ setState, state }) => {
                 ${renderAnswer === true ? 'render-answer' : ''}
                 `
               } onClick={() => toggleButton(4)}>
-                {topics ? topics[3] : `${decode(shuffleAnswer[3])}`}
+                {topics ? topics[3] : decode(shuffleAnswer[3])}
               </div>
             </div>
             <button className={buttonVisibility === true ? 'play-button' : 'play-button play-button-animation'} onClick={() => {
