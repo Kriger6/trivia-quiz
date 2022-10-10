@@ -147,8 +147,7 @@ const Home = ({ setState, state }) => {
     if (level > 10) {
       setButtonClickable(false)
       setStartTimer(false)
-      if (points >= 5) {
-      }
+      setFetchResults(undefined)
     }
   }, [points, level])
 
@@ -163,9 +162,16 @@ const Home = ({ setState, state }) => {
           </div>
           <div className='topic-card'>
             {questionContainer && <div className={questionContainer ? 'question-container' : ''}>
-              {fetchResults !== undefined ? decode(fetchResults[level - 1].question) : ''}
+              {fetchResults !== undefined ? (level > 10 ? decode(fetchResults[level - 2].question) : decode(fetchResults[level - 1].question)) : ''}
+              {buttonClickable === false ? 
+              (points > 5 ? `Quiz successful: Your score is ${points}, your time score is ${timer}` :
+                  `Quiz failed: Your score is ${points}, your time score is ${timer}` 
+              ) : ''}
             </div>}
-            <div ref={topicList} className={moveButtonGroup === true ? 'topic-button-container topic-button-container-animation' : 'topic-button-container'}>
+            <div ref={topicList} className={`
+              ${moveButtonGroup === true ? 'topic-button-container topic-button-container-animation' : 'topic-button-container'}
+              ${level === 11 ? 'topic-button-container-fade-away' : ''}`
+              }>
               <div className={
                 `topic-button 
                 ${selectedTopic === 1 ? 'selected' : ''} 
