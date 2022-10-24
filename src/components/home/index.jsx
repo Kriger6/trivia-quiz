@@ -31,6 +31,7 @@ const Home = ({ setState, state }) => {
   const [startTimer, setStartTimer] = useState(false)
   const [timer, setTimer] = useState(0)
   const [buttonClickable, setButtonClickable] = useState(true)
+  const [restartVisiblity, setRestartVisibilty] = useState(false)
 
   useEffect(() => {
     if (startTimer === true) {
@@ -148,6 +149,7 @@ const Home = ({ setState, state }) => {
       setButtonClickable(false)
       setStartTimer(false)
       setFetchResults(undefined)
+      setRestartVisibilty(true)
     }
   }, [points, level])
 
@@ -223,6 +225,9 @@ const Home = ({ setState, state }) => {
               }, 1500)
               return () => clearTimeout(timer1)
             }}>Play</button>
+            <button className={restartVisiblity === true ? 'play-button restart-button-animation' : 'restart-button'} onClick={() => {
+              window.location.reload()
+            }}>Restart</button>
           </div>
         </div>
       </div>

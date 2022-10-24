@@ -55,6 +55,7 @@
     align-items: center;
     text-align: center;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .selected-topic-button {
@@ -71,6 +72,7 @@
     padding: 0;
     margin-bottom: 20px;
     font-size: 20px;
+    cursor: pointer;
 }
 
 .play-button-animation {
@@ -189,6 +191,10 @@
     animation-fill-mode: forwards;
 }
 
+.topic-button-container-fade-away:hover .topic-button {
+    cursor: default
+}
+
 @keyframes answerBoxFadeAway {
     0% {
         opacity: 1;
@@ -196,5 +202,32 @@
 
     100% {
         opacity: 0;
+    }
+}
+
+.restart-button {
+    display: none;
+}
+
+.restart-button-animation {
+    animation-name: restartButtonAnimation;
+    animation-duration: 2000ms;
+    animation-fill-mode: forwards;
+}
+
+@keyframes restartButtonAnimation {
+    0% {
+        opacity: 0;
+        transform: rotateX(0deg);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: rotateX(90deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: rotateX(0deg);
     }
 }
