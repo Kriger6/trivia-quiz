@@ -37,6 +37,7 @@
 
 .nick-container :first-child {
     margin: 0;
+    font-size: 1rem;
 }
 
 .navbar-user-section img {
@@ -54,6 +55,31 @@
     align-items: center;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: grey;
+}
+
 .navbar-buttons div {
     cursor: pointer;
+}
+
+@media screen and (max-width: 1250px) {
+    .navbar {
+        width: 90%;
+    }
+
+    .navbar-buttons {
+        width: 110px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .navbar {
+        height: 50px;
+    }
 }

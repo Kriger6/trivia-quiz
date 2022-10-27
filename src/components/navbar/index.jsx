@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import './index.css'
 
 const NavBar = ({ setState, state }) => {
@@ -20,16 +21,15 @@ const NavBar = ({ setState, state }) => {
                     </div>
                 </div>
                 <div className='navbar-buttons'>
-                    <div className='home-button-container' onClick={() => navigate('/home')}>
+                    <Link className='home-button-container' to={'/home'}>
                         Home
-                    </div>
-                    <div className='log-out-button-container' onClick={() => {
+                    </Link>
+                    <Link className='log-out-button-container' to={'/registration'} onClick={() => {
                         localStorage.clear()
                         setState(!state)
-                        navigate('/registration')
                     }}>
                         Log out
-                    </div>
+                    </Link>
                 </div>
             </nav>
         </div>

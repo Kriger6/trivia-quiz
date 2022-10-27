@@ -92,3 +92,13 @@
     margin-left: 60px;
     padding-top: 20px;
 }
+
+@media screen and (max-width: 1200px) {
+    .main-info-section {
+        width: 100%;
+    }
+
+    .details-section {
+        width: 100%;
+    }
+}
