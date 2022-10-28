@@ -28,9 +28,13 @@ const Profile = ({ setState, state }) => {
         <section className='details-section'>
           <div className='details-container'>
             <div className='info-keys'>
-              <h1>Information</h1>
-              <h3>Gender</h3>
-              <h3>Date of birth</h3>
+              <div className="information-container">
+                <h1>Information</h1>
+              </div>
+              <div className="information-keys">
+                <h3>Gender</h3>
+                <h3>Date of birth</h3>
+              </div>
             </div>
             <div className='details-data'>
               <h3>{localStorageData.gender}</h3>
