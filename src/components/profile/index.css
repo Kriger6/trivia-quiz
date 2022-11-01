@@ -174,3 +174,17 @@
     }
 
 }
+
+@media screen and (max-height: 450px)
+    {
+        .circle-photo-container img {
+            height: 5rem;
+            width: 5rem;
+        }
+
+        .main-info-container {
+            height: 5rem;
+        }
+
+        
+    }

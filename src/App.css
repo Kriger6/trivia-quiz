@@ -1,3 +1,7 @@
+body {
+    overflow-y: scroll;
+}
+
 .left-side-container h1 {
     color: white;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -258,7 +262,6 @@ input[type='url'] {
     form :nth-child(2) {
         width: 100%;
     }
-
 
 }
 
